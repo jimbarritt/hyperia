@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AntConfiguration">
+    <defaultAnt bundledAnt="true" />
+  </component>
   <component name="BSFConsole">
     <option name="searchOptions">
       <BSFConsoleSearchOptions />
@@ -262,12 +265,20 @@
       </item>
     </group>
   </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="jim">
+      <words>
+        <w>hyperia</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectKey">
     <option name="state" value="project://default" />
   </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../../../game-service/ide/intellij/game-service/game-service.iml" filepath="$PROJECT_DIR$/../../../game-service/ide/intellij/game-service/game-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../shell-client/ide/intellij/shell-client/shell-client.iml" filepath="$PROJECT_DIR$/../../../shell-client/ide/intellij/shell-client/shell-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../hyperia/shell-client/ide/intellij/shell-client/shell-client.iml" filepath="$PROJECT_DIR$/../../../hyperia/shell-client/ide/intellij/shell-client/shell-client.iml" />
     </modules>
   </component>
