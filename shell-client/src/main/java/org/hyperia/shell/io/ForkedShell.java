@@ -21,11 +21,24 @@ public class ForkedShell {
     }
 
     public ShellResult execute() {
-        String command = format("java -cp \"%s\" %s", systemClasspath, mainClass.getName());
-        log.debug(format("Executing command %s", command));
+        return executeCommand(createArgArray());
+    }
+
+    private String[] createArgArray() {
+        return new String[] {
+            "java",
+            "-Dlog4j.configuration=" + System.getProperty("log4j.configuration"),
+            "-classpath",
+            systemClasspath.replaceAll(" ", "\\\\ "),
+            mainClass.getName()
+        };
+    }
+
+    public ShellResult executeCommand(String... arguments) {
+        log.debug(format("Executing command: %s", arguments));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            Process process = Runtime.getRuntime().exec(command);
+            Process process = Runtime.getRuntime().exec(arguments);
 
             StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), error);
             StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), info, out);
