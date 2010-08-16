@@ -23,13 +23,9 @@ public class ShellTest {
 
     @Test
     public void testInvokeMain() throws Exception {
-        Method[] methods = SimpleCommandMain.class.getMethods();
-
-
         Method mainMethod = SimpleCommandMain.class.getMethod("main", new Class[]{String[].class});
 
-        String[] args = new String[] {"a", "b"};
-        mainMethod.invoke(null, new Object[]{args});
+        mainMethod.invoke(null, new Object[]{new String[]{}});
     }
 
 
