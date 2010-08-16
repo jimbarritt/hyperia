@@ -11,9 +11,9 @@ public class EndToEndTest {
 
     @Test
     public void showsASimpleHelpPage() {
-        Shell shell = new Shell(HyperiaShellClientMain.class).withArg("--help");
+        InternalShell internalShell = new InternalShell(HyperiaShellClientMain.class).withArg("--help");
 
-        String output = shell.execute();
+        String output = internalShell.execute();
 
         assertThat(output, containsString("Hyperia"));
         assertThat(output, containsString("Help"));

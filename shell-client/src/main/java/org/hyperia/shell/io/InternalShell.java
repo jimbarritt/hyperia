@@ -9,23 +9,23 @@ import java.util.*;
 import static java.lang.String.format;
 import static java.lang.System.setOut;
 import static java.nio.charset.Charset.defaultCharset;
-import static org.hyperia.shell.io.Io.tryToClose;
+import static org.hyperia.shell.io.Iox.tryToClose;
 
-public class Shell {
-    private static final Logger log = Logger.getLogger(Shell.class);
+public class InternalShell {
+    private static final Logger log = Logger.getLogger(InternalShell.class);
     
     private final Class mainClass;
     private final Method mainMethod;
     private final List<String> arguments;
     private final String[] EMPTY_STRING_ARRAY = new String[]{};
 
-    public Shell(Class mainClass) {
+    public InternalShell(Class mainClass) {
         this.mainClass = mainClass;
         this.mainMethod = findMainMethod(mainClass);
         this.arguments = new ArrayList<String>();
     }
 
-    public Shell withArg(String arg) {
+    public InternalShell withArg(String arg) {
         arguments.add(arg);
         return this;
     }

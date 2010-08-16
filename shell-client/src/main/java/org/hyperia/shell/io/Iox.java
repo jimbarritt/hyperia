@@ -2,7 +2,7 @@ package org.hyperia.shell.io;
 
 import java.io.*;
 
-public class Io {
+public class Iox {
     public static void tryToClose(OutputStream out) {
         if (out == null) {
             return;
