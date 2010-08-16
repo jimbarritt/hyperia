@@ -5,16 +5,13 @@ import org.apache.log4j.*;
 import java.io.*;
 import java.util.*;
 
-import static java.lang.String.format;
-import static org.hyperia.shell.io.Iox.formatArray;
-import static org.hyperia.shell.io.Iox.tryToClose;
-import static org.hyperia.shell.io.StreamGobbler.Log4JLevel.error;
-import static org.hyperia.shell.io.StreamGobbler.Log4JLevel.info;
+import static java.lang.String.*;
+import static org.hyperia.shell.io.Iox.*;
+import static org.hyperia.shell.io.StreamGobbler.Log4JLevel.*;
 
 public class ForkedShell {
     private static final Logger log = Logger.getLogger(ForkedShell.class);
 
-    
 
     private final Class mainClass;
     private String systemClasspath;
@@ -25,30 +22,20 @@ public class ForkedShell {
     }
 
     public ShellResult execute() {
-        JavaArguments javaArguments = new JavaArguments(mainClass).withClasspath(systemClasspath);
-        addNonJavaSystemPropertiesTo(javaArguments);
-        return executeCommand(javaArguments.toStringArray());
+        JavaCommand javaCommand = new JavaCommand(mainClass).withClasspath(systemClasspath);
+        addNonJavaSystemPropertiesTo(javaCommand);
+        return executeCommand(javaCommand.toStringArray());
     }
 
-    private static void addNonJavaSystemPropertiesTo(JavaArguments javaArguments) {
+    private static void addNonJavaSystemPropertiesTo(JavaCommand javaCommand) {
         Properties properties = System.getProperties();
         for (Object key : properties.keySet()) {
-            String keyString = (String)key;
+            String keyString = (String) key;
             if (!keyString.startsWith("java")) {
-                javaArguments.withSystemProperty(keyString, System.getProperty(keyString));
+                javaCommand.withSystemProperty(keyString, System.getProperty(keyString));
             }
         }
-    }
-
-    private String[] createArgArray() {
-        return new String[] {
-            "java",
-            "-Dlog4j.configuration=" + System.getProperty("log4j.configuration"),
-            "-classpath",
-            systemClasspath.replaceAll(" ", "\\\\ "),
-            mainClass.getName()
-        };
-    }
+    }    
 
     public ShellResult executeCommand(String... arguments) {
         if (log.isDebugEnabled()) {
