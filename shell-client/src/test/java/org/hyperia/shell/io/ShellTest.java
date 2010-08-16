@@ -3,6 +3,8 @@ package org.hyperia.shell.io;
 import org.apache.log4j.*;
 import org.junit.*;
 
+import java.lang.reflect.*;
+
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
@@ -19,11 +21,23 @@ public class ShellTest {
         assertThat(response, containsString("Hello world"));
     }
 
+    @Test
+    public void testInvokeMain() throws Exception {
+        Method[] methods = SimpleCommandMain.class.getMethods();
+
+
+        Method mainMethod = SimpleCommandMain.class.getMethod("main", new Class[]{String[].class});
+
+        String[] args = new String[] {"a", "b"};
+        mainMethod.invoke(null, new Object[]{args});
+    }
+
 
     public static class SimpleCommandMain {
         private static final Logger log = Logger.getLogger(SimpleCommandMain.class);
         public static void main(String[] args) {
             log.info("Hello world");
         }
+        
     }
 }

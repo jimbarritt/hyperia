@@ -48,7 +48,7 @@ public class Shell {
 
     private void invokeMainMethod() {
         try {
-            mainMethod.invoke(null, "hello");
+            mainMethod.invoke(new Object[] {});
         } catch (IllegalAccessException e) {
             throw new IoRuntimeException(format("Restricted access to class [%s], is it private?", mainClass.getName()), e);
         } catch (InvocationTargetException e) {
@@ -60,7 +60,7 @@ public class Shell {
 
     private static Method findMainMethod(Class<?> mainClass) {
         try {
-            return mainClass.getDeclaredMethod("main", String[].class);
+            return mainClass.getDeclaredMethod("main", String.class);
         } catch (NoSuchMethodException e) {
             throw new IoRuntimeException(format("Could not find main method on class [%s]", mainClass.getName()), e);
         }
