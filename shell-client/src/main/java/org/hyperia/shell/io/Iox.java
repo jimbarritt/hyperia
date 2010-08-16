@@ -8,7 +8,7 @@ public class Iox {
     public static void tryToClose(OutputStream out) {
         if (out == null) {
             return;
-        }
+        }        
         try {
             out.close();
         } catch (IOException e) {
