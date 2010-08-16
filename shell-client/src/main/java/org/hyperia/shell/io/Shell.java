@@ -6,6 +6,7 @@ import java.io.*;
 import java.lang.reflect.*;
 
 import static java.lang.String.format;
+import static java.lang.System.setOut;
 import static java.nio.charset.Charset.defaultCharset;
 import static org.hyperia.shell.io.Io.tryToClose;
 
@@ -31,8 +32,7 @@ public class Shell {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream capturedOut = new PrintStream(out);
         try {
-            System.setOut(capturedOut);
-            
+            setOut(capturedOut);
             invokeMainMethod();
             capturedOut.flush();
             return out.toString(defaultCharset().name());
@@ -40,7 +40,7 @@ public class Shell {
             throw new IoRuntimeException(format("Executing main class [%s]", mainClass.getName()), e);
         } finally {
             tryToClose(capturedOut);
-            System.setOut(previousOut);
+            setOut(previousOut);
         }
     }
 

@@ -4,8 +4,8 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
     <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <param name="Follow" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <!-- %d{hh:mm:ss}  [%t] -->
             <param name="ConversionPattern" value="%p : [%c{1}] %m%n"/>
         </layout>
     </appender>

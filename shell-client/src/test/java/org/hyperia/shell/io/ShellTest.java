@@ -31,7 +31,12 @@ public class ShellTest {
 
     public static class SimpleCommandMain {
         private static final Logger log = Logger.getLogger(SimpleCommandMain.class);
-        public static void main(String[] args) {
+
+        /**
+         * For this to work, you have to add the following in your log4j.xml
+         * <param name="Follow" value="true"/> 
+         */
+        public static void main(String[] args) {      
             log.info("Hello world");
         }
         
