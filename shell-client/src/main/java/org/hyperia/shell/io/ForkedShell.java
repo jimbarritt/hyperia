@@ -13,17 +13,24 @@ import static org.hyperia.shell.io.Log4jStreamGobbler.Log4JLevel.*;
 public class ForkedShell {
     private static final Logger log = Logger.getLogger(ForkedShell.class);
 
-
     private final Class mainClass;
     private String systemClasspath;
+    private List<String> arguments;
 
     public ForkedShell(Class mainClass) {
         this.mainClass = mainClass;
         this.systemClasspath = System.getProperty("java.class.path");
+        this.arguments = new ArrayList<String>();
+    }
+
+    public ForkedShell withArg(String arg) {
+        arguments.add(arg);
+        return this;
     }
 
     public ShellResult execute() {
         JavaCommand javaCommand = new JavaCommand(mainClass).withClasspath(systemClasspath);
+        javaCommand.addApplicationArguments(arguments);
         addNonJavaSystemPropertiesTo(javaCommand);
         return executeCommand(javaCommand.toStringArray());
     }
@@ -61,6 +68,5 @@ public class ForkedShell {
             tryToClose(out);
         }
     }
-
 
 }

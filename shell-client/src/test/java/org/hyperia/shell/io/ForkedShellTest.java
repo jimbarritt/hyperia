@@ -28,6 +28,16 @@ public class ForkedShellTest {
         assertThat(shellResult.exitCode(), is(99));
     }
 
+    @Test
+    public void canPassArguments() {
+        ForkedShell forkedShell = new ForkedShell(SayHelloCommandMain.class).withArg("foo").withArg("bar");
+
+        ShellResult shellResult = forkedShell.execute();
+
+        assertThat(shellResult.output(), containsString("[foo]"));
+        assertThat(shellResult.output(), containsString("[bar]"));
+    }
+
 
     @Test
     public void escapeSpaces() {

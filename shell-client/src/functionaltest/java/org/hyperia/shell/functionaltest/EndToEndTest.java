@@ -11,12 +11,12 @@ public class EndToEndTest {
 
     @Test
     public void showsASimpleHelpPage() {
-        InternalShell internalShell = new InternalShell(HyperiaShellClientMain.class).withArg("--help");
+        ForkedShell forkedShell = new ForkedShell(HyperiaShellClientMain.class).withArg("--help");
 
-        String output = internalShell.execute();
+        ShellResult shellResult = forkedShell.execute();
 
-        assertThat(output, containsString("Hyperia"));
-        assertThat(output, containsString("Help"));
+        assertThat(shellResult.output(), containsString("Hyperia"));
+        assertThat(shellResult.output(), containsString("Help"));
 
     }
     

@@ -11,6 +11,12 @@ class JavaCommand {
 
     private String inheritedClasspath;
     private Map<String, String> systemProperties = new HashMap<String, String>();
+    private List<String> applicationArguments;
+
+    public JavaCommand addApplicationArguments(List<String> applicationArguments) {
+        this.applicationArguments = applicationArguments;
+        return this;
+    }
 
     static enum JavaOptions {
         classpath;
@@ -46,6 +52,7 @@ class JavaCommand {
             commandArguments.add(format("-D%s=%s", entry.getKey(), entry.getValue()));
         }
         commandArguments.add(mainClassName);
+        commandArguments.addAll(applicationArguments);
         return commandArguments.toArray(new String[commandArguments.size()]);
     }
 }
