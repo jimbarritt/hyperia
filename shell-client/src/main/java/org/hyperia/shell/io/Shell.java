@@ -4,6 +4,7 @@ import org.apache.log4j.*;
 
 import java.io.*;
 import java.lang.reflect.*;
+import java.util.*;
 
 import static java.lang.String.format;
 import static java.lang.System.setOut;
@@ -15,14 +16,17 @@ public class Shell {
     
     private final Class mainClass;
     private final Method mainMethod;
-    private final String[] arguments = new String[]{};
+    private final List<String> arguments;
+    private final String[] EMPTY_STRING_ARRAY = new String[]{};
 
     public Shell(Class mainClass) {
         this.mainClass = mainClass;
         this.mainMethod = findMainMethod(mainClass);
+        this.arguments = new ArrayList<String>();
     }
 
-    public Shell withArg(String s) {
+    public Shell withArg(String arg) {
+        arguments.add(arg);
         return this;
     }
 
@@ -41,12 +45,14 @@ public class Shell {
         } finally {
             tryToClose(capturedOut);
             setOut(previousOut);
+            log.debug("Main class execution completed");
         }
+
     }
 
     private void invokeMainMethod() {
         try {
-            mainMethod.invoke(null, new Object[]{arguments});
+            mainMethod.invoke(null, new Object[]{arguments.toArray(EMPTY_STRING_ARRAY)});
         } catch (IllegalAccessException e) {
             throw new IoRuntimeException(format("Restricted access to class [%s], is it private?", mainClass.getName()), e);
         } catch (InvocationTargetException e) {
