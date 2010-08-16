@@ -3,14 +3,18 @@ package org.hyperia.shell.io;
 import org.apache.log4j.*;
 
 import java.io.*;
+import java.util.*;
 
 import static java.lang.String.format;
+import static org.hyperia.shell.io.Iox.formatArray;
 import static org.hyperia.shell.io.Iox.tryToClose;
 import static org.hyperia.shell.io.StreamGobbler.Log4JLevel.error;
 import static org.hyperia.shell.io.StreamGobbler.Log4JLevel.info;
 
 public class ForkedShell {
     private static final Logger log = Logger.getLogger(ForkedShell.class);
+
+    
 
     private final Class mainClass;
     private String systemClasspath;
@@ -21,7 +25,19 @@ public class ForkedShell {
     }
 
     public ShellResult execute() {
-        return executeCommand(createArgArray());
+        JavaArguments javaArguments = new JavaArguments(mainClass).withClasspath(systemClasspath);
+        addNonJavaSystemPropertiesTo(javaArguments);
+        return executeCommand(javaArguments.toStringArray());
+    }
+
+    private static void addNonJavaSystemPropertiesTo(JavaArguments javaArguments) {
+        Properties properties = System.getProperties();
+        for (Object key : properties.keySet()) {
+            String keyString = (String)key;
+            if (!keyString.startsWith("java")) {
+                javaArguments.withSystemProperty(keyString, System.getProperty(keyString));
+            }
+        }
     }
 
     private String[] createArgArray() {
@@ -35,7 +51,9 @@ public class ForkedShell {
     }
 
     public ShellResult executeCommand(String... arguments) {
-        log.debug(format("Executing command: %s", arguments));
+        if (log.isDebugEnabled()) {
+            log.debug(format("Executing command: %s", formatArray(arguments, " ")));
+        }
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             Process process = Runtime.getRuntime().exec(arguments);
@@ -55,4 +73,6 @@ public class ForkedShell {
             tryToClose(out);
         }
     }
+
+
 }
