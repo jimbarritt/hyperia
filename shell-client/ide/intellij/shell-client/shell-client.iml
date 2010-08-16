@@ -26,7 +26,9 @@
           <root url="file://$MODULE_DIR$/../../../lib/production" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../lib/development/commons-cli-1.2-sources.jar!/" />
+        </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/../../../lib/production" recursive="false" />
       </library>
     </orderEntry>

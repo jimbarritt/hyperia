@@ -10,14 +10,26 @@ import static org.junit.matchers.JUnitMatchers.containsString;
 public class EndToEndTest {
 
     @Test
-    public void showsASimpleHelpPage() {
-        ForkedShell forkedShell = new ForkedShell(HyperiaShellClientMain.class).withArg("--help");
+    public void showsAHelloMessage() {
+        ForkedShell forkedShell = forkHyperia();
 
         ShellResult shellResult = forkedShell.execute();
 
-        assertThat(shellResult.output(), containsString("Hyperia"));
-        assertThat(shellResult.output(), containsString("Help"));
-
+        assertThat(shellResult.output(), containsString("Welcome to Hyperia"));
     }
-    
+
+
+
+    @Test
+    public void showsHelpMessage() {
+        ForkedShell forkedShell = forkHyperia().withArg("--help");
+
+        ShellResult shellResult = forkedShell.execute();
+
+        assertThat(shellResult.output(), containsString("Help"));        
+    }
+
+    private static ForkedShell forkHyperia() {
+        return new ForkedShell(HyperiaShellClientMain.class);
+    }
 }

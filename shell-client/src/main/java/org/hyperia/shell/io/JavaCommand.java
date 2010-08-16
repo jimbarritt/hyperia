@@ -5,7 +5,7 @@ import java.util.*;
 import static java.lang.String.*;
 import static org.hyperia.shell.io.JavaCommand.JavaOptions.*;
 
-class JavaCommand {
+public class JavaCommand {
 
     private final String mainClassName;
 
