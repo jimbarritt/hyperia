@@ -7,7 +7,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 public class ShellTest {
-    
+
+    private static final Logger log = Logger.getLogger(ShellTest.class);
+
     @Test
     public void executesSimpleCommand() {
         Shell shell = new Shell(SimpleCommandMain.class);
@@ -18,7 +20,7 @@ public class ShellTest {
     }
 
 
-    static class SimpleCommandMain {
+    public static class SimpleCommandMain {
         private static final Logger log = Logger.getLogger(SimpleCommandMain.class);
         public static void main(String[] args) {
             log.info("Hello world");
