@@ -4,8 +4,8 @@ import org.apache.log4j.*;
 
 import java.io.*;
 
-public class StreamGobbler extends Thread {
-    private static final Logger log = Logger.getLogger(StreamGobbler.class);
+public class Log4jStreamGobbler extends Thread {
+    private static final Logger log = Logger.getLogger(Log4jStreamGobbler.class);
     private final InputStream in;
     private final Log4JLevel log4JLevel;
     private final OutputStream out;
@@ -29,11 +29,11 @@ public class StreamGobbler extends Thread {
         public abstract void log(Logger logger, String message);
     }
 
-    public StreamGobbler(InputStream in, Log4JLevel log4JLevel) {
+    public Log4jStreamGobbler(InputStream in, Log4JLevel log4JLevel) {
         this(in, log4JLevel, null);
     }
 
-    StreamGobbler(InputStream in, Log4JLevel log4JLevel, OutputStream redirect) {
+    Log4jStreamGobbler(InputStream in, Log4JLevel log4JLevel, OutputStream redirect) {
         this.in = in;
         this.log4JLevel = log4JLevel;
         this.out = redirect;

@@ -6,8 +6,9 @@ import java.io.*;
 import java.util.*;
 
 import static java.lang.String.*;
+import static java.nio.charset.Charset.defaultCharset;
 import static org.hyperia.shell.io.Iox.*;
-import static org.hyperia.shell.io.StreamGobbler.Log4JLevel.*;
+import static org.hyperia.shell.io.Log4jStreamGobbler.Log4JLevel.*;
 
 public class ForkedShell {
     private static final Logger log = Logger.getLogger(ForkedShell.class);
@@ -45,15 +46,15 @@ public class ForkedShell {
         try {
             Process process = Runtime.getRuntime().exec(arguments);
 
-            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), error);
-            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), info, out);
+            Log4jStreamGobbler errorGobbler = new Log4jStreamGobbler(process.getErrorStream(), error);
+            Log4jStreamGobbler outputGobbler = new Log4jStreamGobbler(process.getInputStream(), info, out);
 
             errorGobbler.start();
             outputGobbler.start();
 
             int exitCode = process.waitFor();
             out.flush();
-            return new ShellResult(exitCode);
+            return new ShellResult(exitCode, out.toString(defaultCharset().name()));
         } catch (Exception e) {
             throw new IoRuntimeException(format("Forking main class [%s]", mainClass.getName()), e);
         } finally {
