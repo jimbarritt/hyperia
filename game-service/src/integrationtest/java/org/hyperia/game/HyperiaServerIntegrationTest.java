@@ -3,16 +3,15 @@ package org.hyperia.game;
 import org.junit.*;
 
 public class HyperiaServerIntegrationTest {
-    private HyperiaServer server;
+    private static final HyperiaServer server = new HyperiaServer();
 
     @BeforeClass
-    public void startServer() {
-        server = new HyperiaServer();
+    public static void startServer() {        
         server.start();
     }
 
     @AfterClass
-    public void stopServer() {
+    public static void stopServer() {
         server.stop();
     }
 
@@ -20,4 +19,5 @@ public class HyperiaServerIntegrationTest {
     public void canGetTheRootUri() {
         
     }
+    
 }
