@@ -1,7 +1,5 @@
 package org.hyperia.shell;
 
-public class HyperiaShellCommand {
-    public void execute() {
-
-    }
+public interface HyperiaShellCommand {
+    void execute();
 }
